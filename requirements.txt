@@ -1,0 +1,14 @@
+Django==1.7.2
+Markdown==2.5.2
+PyYAML==3.11
+argparse==1.3.0
+django-nose==1.3
+djangorestframework==3.0.3
+httplib2==0.9
+neomodel==1.0.2
+nose==1.3.4
+omnijson==0.1.2
+py2neo==1.6.4
+python-dateutil==2.4.0
+pytz==2014.7
+six==1.9.0
