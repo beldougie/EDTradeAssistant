@@ -1,15 +1,19 @@
 from neomodel import StructuredNode, StringProperty, DateTimeProperty, \
-    ArrayProperty, BooleanProperty
+    ArrayProperty, BooleanProperty, RelationshipTo, Relationship, \
+    RelationshipFrom
+from core import rel_types
+from core.relationships import Contains, IsNeighbourOf, TradesIn
 
 
 class Commodity(StructuredNode):
     """
-    Represents a commodity that can be sold at any Station
+    Defines goods that can be sold or bought from Stations.
 
-    Note: Not all commodities can be found at all stations.
+    Note: Not all commodities can be found at all Stations.
     """
     name = StringProperty()
     category = StringProperty()
+    updated_at = DateTimeProperty()
     created_at = DateTimeProperty()
 
 
@@ -28,6 +32,11 @@ class Station(StructuredNode):
     updated_at = DateTimeProperty()
     created_at = DateTimeProperty()
 
+    system = RelationshipFrom('System', rel_type=rel_types.CONTAINS,
+                              model=Contains)
+    market = RelationshipTo('Commodity', rel_type=rel_types.TRADES_IN,
+                            model=TradesIn)
+
 
 class System(StructuredNode):
     """
@@ -39,4 +48,9 @@ class System(StructuredNode):
     """
     name = StringProperty()
     created_at = DateTimeProperty()
+
+    stations = RelationshipTo('Station', rel_type=rel_types.CONTAINS,
+                              model=Contains)
+    neighbours = Relationship('System', rel_type=rel_types.IS_NEIGHBOUR_OF,
+                              model=IsNeighbourOf)
 
